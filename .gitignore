@@ -1,0 +1,7 @@
+# Build Artifacts
+build/
+*.o
+*.a
+*.so
+*.exe
+Makefile
