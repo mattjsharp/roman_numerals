@@ -5,3 +5,6 @@ build/
 *.so
 *.exe
 Makefile
+
+# Using for local tests
+*demo*.cpp

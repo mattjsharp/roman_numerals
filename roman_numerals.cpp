@@ -1,6 +1,5 @@
-#include <iostream>
-#include <string>
 #include <map>
+#include <stdexcept>
 
 #include "roman_numerals.hpp"
 
@@ -19,8 +18,8 @@ int roman_char_to_int(char c) {
 }
 
 // Function to parse the entire Roman numeral string
-long long parse_roman(const char* str, size_t len) {
-    long long value = 0;
+int parse_roman(const char* str, size_t len) {
+    int value = 0;
     for (size_t i = 0; i < len; ++i) {
         int current_val = roman_char_to_int(str[i]);
         // Check if there is a next character and if it indicates a subtraction (e.g., IV = 4)
@@ -34,6 +33,29 @@ long long parse_roman(const char* str, size_t len) {
 }
 
 // The user-defined literal operator
-long long operator"" _ronum(const char* str, size_t len) {
+int operator"" _ronum(const char* str, size_t len) {
     return parse_roman(str, len);
+}
+
+namespace ronum {
+    std::string ronum_from_int(int num) {
+        if (num <= 0 || num > 3999) {
+                throw std::out_of_range("Number must be between 1 and 3999");
+            }
+        
+            // Roman numeral symbols and their values
+            const int values[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+            const std::string symbols[] = {
+                "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"
+            };
+        
+            std::string result;
+            for (size_t i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
+                while (num >= values[i]) {
+                    num -= values[i];
+                    result += symbols[i];
+                }
+            }
+            return result;
+    }
 }
