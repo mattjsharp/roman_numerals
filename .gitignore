@@ -7,4 +7,4 @@ build/
 Makefile
 
 # Using for local tests
-*demo*.cpp
+*demo*
